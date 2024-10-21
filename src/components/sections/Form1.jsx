@@ -1,10 +1,8 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
 function Form1() {
     const activeSection = useSelector((state) => state.active.section)
-    const { register, handleSubmit } = useForm()
   return (
 <div className={activeSection === 1? "Form1-container p-2 flex gap-2" : "hidden"}>
     <form className="form">

@@ -8,9 +8,9 @@ function Form3() {
   const addOns = useSelector((state) => state.addOns)
   const dispatch = useDispatch();
   const [checkedAddOns, setCheckedAddOns] = useState({
-    'DLC and Expansions': false,
-    'Community and Forums': false,
-    'Virtual Reality Integration': false,
+    dlcAndExpansions: false,
+    communityAndForums: false,
+    virtualRealityIntegration: false,
     
   })
 
@@ -23,10 +23,11 @@ function Form3() {
         <p className='text-gray-400'>Select the add-ons you'd like to include in your gaming experience.</p>
       </div>
       <div className='flex gap-2 flex-col mx-auto '>
-        <div className='border-2 grid grid-cols-[1fr_3fr_1fr] place-items-center border-gray-200 rounded-md md:w-[400px] p-4'>
+        <div className={`border-2 grid grid-cols-[1fr_3fr_1fr] place-items-center border-gray-200 rounded-md md:w-[400px] p-4
+           ${checkedAddOns.dlcAndExpansions? "bg-[#a6a67726]" : null}`}>
           <input onChange={(event)=> {
             const checked = event.target.checked;
-
+            setCheckedAddOns({...checkedAddOns, dlcAndExpansions: !checkedAddOns.dlcAndExpansions })
             checked? dispatch(addAddOn({ name: 'DLC and Expansions',price: 4, checked})) : dispatch(removeAddOn("DLC and Expansions"))
           }}
           className='accent-primary h-5 w-5'
@@ -38,10 +39,12 @@ function Form3() {
           </div>
           <p>$4/month</p>
         </div>
-  <div className='border-2 grid grid-cols-[1fr_3fr_1fr] place-items-center border-gray-200 rounded-md md:w-[400px] p-4'>
+  <div className={`border-2 grid grid-cols-[1fr_3fr_1fr] place-items-center border-gray-200 rounded-md md:w-[400px] p-4
+           ${checkedAddOns.communityAndForums? "bg-[#a6a67726]" : null}`}>
           <input
           onChange={(event)=> {
             const checked = event.target.checked;
+            setCheckedAddOns({...checkedAddOns, communityAndForums: !checkedAddOns.communityAndForums })
             checked? dispatch(addAddOn({ name: 'Community and Forums',price: 2, checked})) : dispatch(removeAddOn("Community and Forums"))
           }}
            className='accent-primary h-5 w-5' type="checkbox" name="" id="" />
@@ -51,10 +54,12 @@ function Form3() {
           </div>
           <p>$2/month</p>
         </div>
-        <div className='border-2 grid grid-cols-[1fr_3fr_1fr] place-items-center border-gray-200 rounded-md md:w-[400px] p-4'>
+        <div className={`border-2 grid grid-cols-[1fr_3fr_1fr] place-items-center border-gray-200 rounded-md md:w-[400px] p-4
+           ${checkedAddOns.virtualRealityIntegration? "bg-[#a6a67726]" : null}`}>
           <input
           onChange={(event)=> {
             const checked = event.target.checked;
+            setCheckedAddOns({...checkedAddOns, virtualRealityIntegration: !checkedAddOns.virtualRealityIntegration })
             checked? dispatch(addAddOn({ name: 'Virtual Reality Integration',price: 3, checked})) : dispatch(removeAddOn("Virtual Reality Integration"))
           }}
           className='accent-primary h-5 w-5' type="checkbox" name="" id="" />

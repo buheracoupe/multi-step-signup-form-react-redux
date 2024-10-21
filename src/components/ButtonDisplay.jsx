@@ -26,8 +26,8 @@ const dispatch = useDispatch()
 
   return (
     <div className='btn-container md:absolute md:left-32 md:w-[600px] flex justify-between md:bottom-0 items-center  px-8 py-4'>
-        <button onClick={handleBack} className='text-gray-400'>Go Back</button>
-        <button onClick={handleNext} className='bg-primaryDark rounded-md p-1 text-primaryLight'>Next Step</button>
+        {section !==1 && <button onClick={handleBack} className='text-gray-400'>Go Back</button>}
+        <button onClick={handleNext} className='bg-primaryDark rounded-md p-1 text-primaryLight'>{section === 4? "Confirm" : "Next Step"}</button>
     </div>
   )
 }

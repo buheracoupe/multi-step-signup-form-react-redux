@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GiAncientSword } from "react-icons/gi";
 import { GiAbstract065 } from "react-icons/gi";
 import { GiAlienEgg } from "react-icons/gi";
-import { setPlan } from '../../app/planChoiceSlice';
+import { setPlan, capturePlan } from '../../app/planChoiceSlice';
 
 function Form2() {
+
   const section = useSelector((state) => state.active.section)
   const planChoice = useSelector((state) => state.plan.duration)
   const dispatch = useDispatch()
+  const [chosenPlan, setChosenPlan] = useState({
+    basic: false,
+    silver: false,
+    premium: false
+  })
+
   return (
 <form className={section === 2? "Form1-container w-full mb-4 p-2 flex flex-col gap-2" : "hidden"}>
 <div className="flex flex-col gap-4">
@@ -16,7 +23,16 @@ function Form2() {
   <p className='text-lg text-gray-400'>You have the option of monthly or yearly billing</p>
 </div>
 <div className='plans flex gap-8 mt-4 mx-auto justify-center w-full'>
-  <div className="rounded-md md:p-5 flex flex-col gap-4 text-primaryDark border-2 border-gray-300 p-2">
+  <div onClick={()  => {
+    setChosenPlan({basic:true, silver: false, premium: false});
+    dispatch(capturePlan({
+      duration: planChoice,
+      planDetails: 'Basic Plan',
+      price: planChoice === "monthly" ? 9 : 90
+    }))
+  }}
+   className={`rounded-md md:p-5 flex flex-col gap-4 text-primaryDark border-2 p-2
+     ${chosenPlan.basic === true ? "border-primary bg-[#a6a6773f]" : "border-gray-300"}`}>
   <GiAbstract065 className='text-5xl text-blue-400' />
   <span>
       <p className='font-semibold'>Basic Plan</p>
@@ -25,7 +41,17 @@ function Form2() {
       <p className={planChoice === "yearly"? null : "hidden"}>1 Month Free</p>
     </span>
   </div>
-  <div className="rounded-md md:p-5 flex flex-col gap-4 text-primaryDark border-2 border-gray-300 p-2">
+  <div
+  onClick={()  => {
+    setChosenPlan({basic:false, silver:true, premium: false})
+    dispatch(capturePlan({
+      duration: planChoice,
+      planDetails: 'Silver Plan',
+      price: planChoice === "monthly" ? 12 : 120
+    }))
+  }}
+   className={`rounded-md md:p-5 flex flex-col gap-4 text-primaryDark border-2 p-2
+     ${chosenPlan.silver === true ? "border-primary bg-[#a6a6773f]" : "border-gray-300"}`}>
   <GiAlienEgg className='text-5xl text-green-400' />
   <span>
       <p className='font-semibold'>Silver Plan</p>
@@ -34,7 +60,17 @@ function Form2() {
       <p className={planChoice === "yearly"? null : "hidden"}>2 Months Free</p>
     </span>
   </div>
-  <div className="rounded-md md:p-5 flex flex-col gap-4 text-primaryDark border-2 border-gray-300 p-2">
+  <div
+  onClick={()  => {
+    setChosenPlan({basic:false, silver:false, premium: true})
+    dispatch(capturePlan({
+      duration: planChoice,
+      planDetails: 'Premium Plan',
+      price: planChoice === "monthly" ? 19 : 200
+    }))
+  }}
+  className={`rounded-md md:p-5 flex flex-col gap-4 text-primaryDark border-2 border-gray-300 p-2
+   ${chosenPlan.premium === true ? "border-primary bg-[#a6a6773f]" : "border-gray-300"}`}>
     <GiAncientSword className='text-5xl text-orange-600' />
     <span>
       <p className='font-semibold'>Premium Plan</p>

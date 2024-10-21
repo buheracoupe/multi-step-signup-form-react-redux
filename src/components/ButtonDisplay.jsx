@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 function ButtonDisplay() {
 const section = useSelector((state)=> state.active.section )
+const planConfig = useSelector ((state)=> state.plan.planDetails)
 const dispatch = useDispatch()
+
     function handleNext(){
         switch (section){
 
@@ -24,8 +26,11 @@ const dispatch = useDispatch()
         }
     }
 
+    if(Object.keys(planConfig).length === 0 && section === 4) return
+
   return (
-    <div className='btn-container md:absolute md:left-32 md:w-[600px] flex justify-between md:bottom-0 items-center  px-8 py-4'>
+    <div className={`btn-container md:absolute md:w-[600px] flex justify-between md:bottom-0 items-center  px-8 py-4 
+    ${section === 1? "md:-right-64" : "md:left-32"}`}>
         {section !==1 && <button onClick={handleBack} className='text-gray-400'>Go Back</button>}
         <button onClick={handleNext} className='bg-primaryDark rounded-md p-1 text-primaryLight'>{section === 4? "Confirm" : "Next Step"}</button>
     </div>
